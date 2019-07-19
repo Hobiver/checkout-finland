@@ -7,7 +7,10 @@ npm install --save checkout-finland
 
 ## Usage
 
-### Create client
+### Create client 
+
+Use test credentials for testing purposes:
+https://checkoutfinland.github.io/psp-api/#/?id=test-credentials
 
 ```
 const CheckoutFinland = require('checkout-finland')
@@ -24,12 +27,12 @@ const { transactionId } = await client.createPayment(payment)
 const data = await client.getPayment(transactionId)
 ```
 
-### Create refund fot the payment (https://checkoutfinland.github.io/psp-api/#/?id=get)
+### Create refund fot the payment (https://checkoutfinland.github.io/psp-api/#/?id=refund)
 ```
 const data = await client.createRefund(refund, transactionId)
 ```
 
-### Create email refund for the payment (https://checkoutfinland.github.io/psp-api/#/?id=get)
+### Create email refund for the payment (https://checkoutfinland.github.io/psp-api/#/?id=email-refund)
 ```
 const data = await client.createEmailRefund(refund, transactionId)
 ```
