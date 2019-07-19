@@ -24,12 +24,13 @@ class CheckoutClient {
   }
 
   async makeRequest(body, method, path, transactionId) {
+    const timestamp = new Date()
     const checkoutHeaders = {
       'checkout-account': this.merchantId,
       'checkout-algorithm': 'sha256',
       'checkout-method': method,
       'checkout-nonce': uuidv1(),
-      'checkout-timestamp': '2018-07-06T10:01:31.904Z'
+      'checkout-timestamp': timestamp.toISOString()
     }
 
     if (transactionId) checkoutHeaders['checkout-transaction-id'] = transactionId
