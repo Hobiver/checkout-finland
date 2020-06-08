@@ -1,6 +1,6 @@
 import * as crypto from 'crypto'
 import request from 'request-promise'
-import uuidv1 from 'uuid/v1'
+import { v1 as uuidv1 } from 'uuid'
 import { CheckoutPayment, CheckoutRefund } from './types'
 
 
@@ -93,7 +93,7 @@ export class CheckoutClient {
 
   async getPaymentMethods(qs: any) {
     try {
-      return await this.makeRequest(null, 'GET', '/merchants/payment-providers', null, qs)
+      return await this.makeRequest(null, 'GET', '/merchants/payment-providers', undefined, qs)
     } catch (err) {
       console.log('Error in get payment: ', err.message)
       throw err
@@ -102,7 +102,7 @@ export class CheckoutClient {
 
   async getPaymentMethodsGrouped(qs: any) {
     try {
-      return await this.makeRequest(null, 'GET', '/merchants/grouped-payment-providers', null, qs)
+      return await this.makeRequest(null, 'GET', '/merchants/grouped-payment-providers', undefined, qs)
     } catch (err) {
       console.log('Error in get payment: ', err.message)
       throw err

@@ -2,7 +2,7 @@
   "name": "checkout-finland",
   "version": "1.1.0",
   "description": "",
-  "main": "index.js",
+  "main": "src/index.ts",
   "scripts": {
     "test": "jest",
     "build": "tsc"
@@ -11,17 +11,21 @@
   "license": "ISC",
   "dependencies": {
     "crypto": "1.0.1",
-    "request": "2.88.0",
-    "request-promise": "4.2.4",
-    "uuid": "3.3.2"
+    "request": "2.88.2",
+    "request-promise": "4.2.5",
+    "uuid": "8.1.0"
   },
   "devDependencies": {
     "@types/jest": "25.2.3",
     "@types/node": "14.0.12",
+    "@types/request-promise": "4.1.46",
     "@types/uuid": "8.0.0",
     "jest": "24.8.0",
     "typescript": "3.9.5"
   },
+  "files": [
+    "lib/**/*"
+  ],
   "jest": {
     "testMatch": [
       "**/*.spec.js"

@@ -1,13 +1,13 @@
 {
   "compilerOptions": {
+    "target": "es5",
     "module": "commonjs",
-    "target": "esnext",
-    "lib": ["dom", "esnext"],
-    "allowJs": true,
     "esModuleInterop": true,
-    "resolveJsonModule": true,
+    "typeRoots": ["./node_modules/@types"],
+    "declaration": true,
     "outDir": "./lib",
-    "alwaysStrict": true
+    "strict": true
   },
-  "include": ["src"]
+  "include": ["src"],
+  "exclude": ["src/**/*.spec.js"]
 }
