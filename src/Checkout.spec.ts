@@ -1,10 +1,11 @@
-const Checkout = require('./Checkout')
-const uuidv1 = require('uuid/v1')
+import Checkout from './Checkout'
+import uuidv1 from 'uuid/v1'
+import { CheckoutPayment } from './types'
 
 describe('Checkout client', () => {
   describe('create payment', () => {
     test('success if everything correct', async () => {
-      const payment = {
+      const payment: CheckoutPayment = {
         stamp: uuidv1(),
         reference: '3759170',
         amount: 1525,
@@ -36,7 +37,7 @@ describe('Checkout client', () => {
       expect(res).toBeDefined()
     })
     test('error if secret wrong', async () => {
-      const payment = {
+      const payment: CheckoutPayment = {
         stamp: uuidv1(),
         reference: '3759170',
         amount: 1525,
@@ -73,7 +74,7 @@ describe('Checkout client', () => {
 
   describe('get payment', () => {
     test('success if everything correct', async () => {
-      const payment = {
+      const payment: CheckoutPayment = {
         stamp: uuidv1(),
         reference: '3759170',
         amount: 1525,

@@ -1,16 +1,22 @@
-const crypto = require('crypto')
-const request = require('request-promise')
-const uuidv1 = require('uuid/v1')
+import * as crypto from 'crypto'
+import request from 'request-promise'
+import uuidv1 from 'uuid/v1'
+import { CheckoutPayment, CheckoutRefund } from './types'
 
-class CheckoutClient {
-  constructor(merchantId, secret) {
+
+export class CheckoutClient {
+  private algorithm: string
+  private secret: string
+  private merchantId: string
+  private baseUrl: string
+  constructor(merchantId: string, secret: string) {
     this.algorithm = 'sha256'
     this.secret = secret
     this.merchantId = merchantId
     this.baseUrl = 'https://api.checkout.fi'
   }
 
-  calculateHmac(params, body) {
+  calculateHmac(params: any, body: any) {
     const hmacPayload = Object.keys(params)
       .sort()
       .map(key => [key, params[key]].join(':'))
@@ -23,9 +29,9 @@ class CheckoutClient {
       .digest('hex')
   }
 
-  async makeRequest(body, method, path, transactionId, queryParams) {
+  async makeRequest(body: any, method: 'POST' | 'GET' | 'PUT', path: string, transactionId?: string, queryParams?: any) {
     const timestamp = new Date()
-    const checkoutHeaders = {
+    const checkoutHeaders: any = {
       'checkout-account': this.merchantId,
       'checkout-algorithm': 'sha256',
       'checkout-method': method,
@@ -39,13 +45,13 @@ class CheckoutClient {
     const signature = this.calculateHmac(checkoutHeaders, body)
     const headers = { ...checkoutHeaders, signature }
 
-    const req = { method, url, headers, json: true, qs: queryParams }
+    const req: any = { method, url, headers, json: true, qs: queryParams }
     if (body) req.body = body
 
     return await request(req)
   }
 
-  async createPayment(payment) {
+  async createPayment(payment: CheckoutPayment) {
     try {
       return await this.makeRequest(payment, 'POST', '/payments')
     } catch (err) {
@@ -54,7 +60,11 @@ class CheckoutClient {
     }
   }
 
-  async getPayment(id) {
+  /**
+   * Get data of single payment
+   * @param id transactionId from checkout
+   */
+  async getPayment(id: string) {
     try {
       return await this.makeRequest(null, 'GET', '/payments/' + id, id)
     } catch (err) {
@@ -63,7 +73,7 @@ class CheckoutClient {
     }
   }
 
-  async createRefund(refund, id) {
+  async createRefund(refund: CheckoutRefund, id: string) {
     try {
       return await this.makeRequest(refund, 'POST', `/payments/${id}/refund`, id)
     } catch (err) {
@@ -72,7 +82,7 @@ class CheckoutClient {
     }
   }
 
-  async createEmailRefund(refund, id) {
+  async createEmailRefund(refund: CheckoutRefund, id: string) {
     try {
       return await this.makeRequest(refund, 'POST', `/payments/${id}/refund/email`, id)
     } catch (err) {
@@ -81,7 +91,7 @@ class CheckoutClient {
     }
   }
 
-  async getPaymentMethods(qs) {
+  async getPaymentMethods(qs: any) {
     try {
       return await this.makeRequest(null, 'GET', '/merchants/payment-providers', null, qs)
     } catch (err) {
@@ -90,7 +100,7 @@ class CheckoutClient {
     }
   }
 
-  async getPaymentMethodsGrouped(qs) {
+  async getPaymentMethodsGrouped(qs: any) {
     try {
       return await this.makeRequest(null, 'GET', '/merchants/grouped-payment-providers', null, qs)
     } catch (err) {
@@ -100,4 +110,4 @@ class CheckoutClient {
   }
 }
 
-module.exports = CheckoutClient
+export default CheckoutClient

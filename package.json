@@ -4,17 +4,23 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "jest"
+    "test": "jest",
+    "build": "tsc"
   },
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "crypto": "1.0.1",
     "request": "2.88.0",
     "request-promise": "4.2.4",
     "uuid": "3.3.2"
   },
   "devDependencies": {
-    "jest": "24.8.0"
+    "@types/jest": "25.2.3",
+    "@types/node": "14.0.12",
+    "@types/uuid": "8.0.0",
+    "jest": "24.8.0",
+    "typescript": "3.9.5"
   },
   "jest": {
     "testMatch": [
