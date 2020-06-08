@@ -23,7 +23,7 @@ class CheckoutClient {
       .digest('hex')
   }
 
-  async makeRequest(body, method, path, transactionId) {
+  async makeRequest(body, method, path, transactionId, queryParams) {
     const timestamp = new Date()
     const checkoutHeaders = {
       'checkout-account': this.merchantId,
@@ -39,7 +39,7 @@ class CheckoutClient {
     const signature = this.calculateHmac(checkoutHeaders, body)
     const headers = { ...checkoutHeaders, signature }
 
-    const req = { method, url, headers, json: true }
+    const req = { method, url, headers, json: true, qs: queryParams }
     if (body) req.body = body
 
     return await request(req)
@@ -77,6 +77,24 @@ class CheckoutClient {
       return await this.makeRequest(refund, 'POST', `/payments/${id}/refund/email`, id)
     } catch (err) {
       console.log('Error in refund: ', err.message)
+      throw err
+    }
+  }
+
+  async getPaymentMethods(qs) {
+    try {
+      return await this.makeRequest(null, 'GET', '/merchants/payment-providers', null, qs)
+    } catch (err) {
+      console.log('Error in get payment: ', err.message)
+      throw err
+    }
+  }
+
+  async getPaymentMethodsGrouped(qs) {
+    try {
+      return await this.makeRequest(null, 'GET', '/merchants/grouped-payment-providers', null, qs)
+    } catch (err) {
+      console.log('Error in get payment: ', err.message)
       throw err
     }
   }
