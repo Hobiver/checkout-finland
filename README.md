@@ -1,5 +1,5 @@
 # checkout-finland
-Client for checkout payment service (https://checkoutfinland.github.io).
+Client for checkout payment service (https://checkoutfinland.github.io). Start by running npm run build
 
 ## Installation
 
