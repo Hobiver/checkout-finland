@@ -60,7 +60,7 @@ export type CheckoutPayment = {
   groups?: CheckoutPaymentMethodGroup[];
 };
 
-export type PaymentProvider = {
+export type CheckoutPaymentProvider = {
   url: string;
   icon: string;
   svg: string;
